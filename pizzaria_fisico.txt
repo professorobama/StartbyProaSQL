@@ -1,0 +1,386 @@
+/* pizzaria_logico: */
+
+CREATE TABLE Funcionario (
+    idFuncionario INT PRIMARY KEY,
+    fk_nomeFuncionario_nomeFuncionario_PK INT,
+    dtnFuncionario DATE,
+    fk_custoFuncionario_custoFuncionario_PK INT,
+    cpfFuncionario VARCHAR,
+    pisFuncionario VARCHAR,
+    fk_emailFuncionario_emailFuncionario_PK INT,
+    fk_turnoFuncionario_turnoFuncionario_PK INT,
+    funcaoFuncionario VARCHAR,
+    fk_contaBancariaFuncionario_contaBancariaFuncionario_PK INT,
+    fk_telefoneFuncionario_telefoneFuncionario_PK INT,
+    fk_enderecoFuncionario_enderecoFuncionario_PK INT,
+    UNIQUE (cpfFuncionario, pisFuncionario)
+);
+
+CREATE TABLE Pedido (
+    idPedido INT PRIMARY KEY,
+    observacoesPedido VARCHAR,
+    horarioPedido DATE
+);
+
+CREATE TABLE Pizza (
+    idPizza INT PRIMARY KEY,
+    nomePizza VARCHAR,
+    precoPizza FLOAT,
+    tamanhoPizza VARCHAR,
+    imagemPizza BLOB,
+    bordaPizza VARCHAR,
+    tipoPizza VARCHAR,
+    fk_Pedido_idPedido INT
+);
+
+CREATE TABLE Esfiha (
+    idEsfiha INT PRIMARY KEY,
+    nomeEsfiha VARCHAR,
+    tipoEsfiha VARCHAR,
+    precoEsfiha FLOAT,
+    imagemEsfiha BLOB
+);
+
+CREATE TABLE Bebida (
+    idBebida INT PRIMARY KEY,
+    nomeBebida VARCHAR,
+    tipoBebida VARCHAR,
+    precoBebida FLOAT,
+    quantidadeBebida INT,
+    saborBebida VARCHAR,
+    fabricanteBebida VARCHAR,
+    estoqueBebida INT
+);
+
+CREATE TABLE Cliente (
+    idCliente INT PRIMARY KEY,
+    nomeCliente VARCHAR,
+    dtnCliente DATE,
+    enderecoCliente VARCHAR,
+    telefoneCliente INT,
+    emailCliente VARCHAR,
+    cpfCliente VARCHAR
+);
+
+CREATE TABLE Forma_de_Pagamento (
+    idPagamento INT PRIMARY KEY,
+    parcelamentoPagamento INT,
+    descricaoPagamento VARCHAR,
+    origemPagamento VARCHAR,
+    destinoPagamento VARCHAR,
+    fk_opcaoPagamento_opcaoPagamento_PK INT,
+    valorPagamento FLOAT
+);
+
+CREATE TABLE Entrega (
+    idEntrega INT PRIMARY KEY,
+    horarioEntrega TIMESTAMP,
+    pagamentoEntrega FLOAT,
+    tipoEntrega VARCHAR
+);
+
+CREATE TABLE Ingrediente (
+    idIngrediente INT PRIMARY KEY,
+    quantidadeIngrediente INT,
+    validadeIngrediente DATE,
+    tipoIngrediente VARCHAR,
+    estoqueIngrediente VARCHAR,
+    fabricacaoIngrediente VARCHAR,
+    dataDeCompraIngrediente DATE
+);
+
+CREATE TABLE nomeFuncionario (
+    nomeFuncionario_PK INT NOT NULL PRIMARY KEY,
+    primeiroNome VARCHAR,
+    ultimoNome VARCHAR
+);
+
+CREATE TABLE custoFuncionario (
+    custoFuncionario_PK INT NOT NULL PRIMARY KEY,
+    salarioFuncionario FLOAT,
+    impostosFuncionario FLOAT
+);
+
+CREATE TABLE emailFuncionario (
+    emailFuncionario_PK INT NOT NULL PRIMARY KEY,
+    inicioEmailFuncionario VARCHAR,
+    fimEmailFuncionario VARCHAR
+);
+
+CREATE TABLE turnoFuncionario (
+    turnoFuncionario_PK INT NOT NULL PRIMARY KEY,
+    turnoFuncionario VARCHAR
+);
+
+CREATE TABLE contaBancariaFuncionario (
+    contaBancariaFuncionario_PK INT NOT NULL PRIMARY KEY,
+    contaBancaria VARCHAR,
+    agenciaBancaria INT,
+    bancoBancaria VARCHAR,
+    tipoDeContaBancaria VARCHAR
+);
+
+CREATE TABLE telefoneFuncionario (
+    telefoneFuncionario_PK INT NOT NULL PRIMARY KEY,
+    dddTelefoneFuncionario VARCHAR,
+    telefoneFuncionario VARCHAR
+);
+
+CREATE TABLE enderecoFuncionario (
+    enderecoFuncionario_PK INT NOT NULL PRIMARY KEY,
+    logradouroEndereco VARCHAR,
+    cidadeEndereco VARCHAR,
+    cepEndereco VARCHAR,
+    ufEndereco VARCHAR,
+    numeroEndereco INT,
+    complementoEndereco VARCHAR,
+    bairroEndereco VARCHAR
+);
+
+CREATE TABLE opcaoPagamento (
+    opcaoPagamento_PK INT NOT NULL PRIMARY KEY,
+    dinheiroOpcao INT,
+    pixOpcao INT,
+    creditoOpcao INT,
+    debitoOpcao INT
+);
+
+CREATE TABLE Gerenciar (
+    fk_Pedido_idPedido INT,
+    fk_Funcionario_idFuncionario INT
+);
+
+CREATE TABLE Fazer (
+    fk_Funcionario_idFuncionario INT,
+    fk_Pizza_idPizza INT
+);
+
+CREATE TABLE Incluir (
+    fk_Pedido_idPedido INT,
+    fk_Esfiha_idEsfiha INT
+);
+
+CREATE TABLE Fazer (
+    fk_Funcionario_idFuncionario INT,
+    fk_Esfiha_idEsfiha INT
+);
+
+CREATE TABLE Compor (
+    fk_Ingrediente_idIngrediente INT,
+    fk_Pizza_idPizza INT
+);
+
+CREATE TABLE Compor (
+    fk_Ingrediente_idIngrediente INT,
+    fk_Esfiha_idEsfiha INT
+);
+
+CREATE TABLE Incluir (
+    fk_Pedido_idPedido INT,
+    fk_Bebida_idBebida INT
+);
+
+CREATE TABLE Atender (
+    fk_Cliente_idCliente INT,
+    fk_Funcionario_idFuncionario INT
+);
+
+CREATE TABLE Realizar (
+    fk_Cliente_idCliente INT,
+    fk_Pedido_idPedido INT
+);
+
+CREATE TABLE Englobar (
+    fk_Forma_de_Pagamento_idPagamento INT,
+    fk_Pedido_idPedido INT
+);
+
+CREATE TABLE Conter (
+    fk_Pedido_idPedido INT,
+    fk_Entrega_idEntrega INT
+);
+
+CREATE TABLE Receber (
+    fk_Cliente_idCliente INT,
+    fk_Entrega_idEntrega INT
+);
+
+CREATE TABLE Transportar (
+    fk_Entrega_idEntrega INT,
+    fk_Funcionario_idFuncionario INT
+);
+ 
+ALTER TABLE Funcionario ADD CONSTRAINT FK_Funcionario_2
+    FOREIGN KEY (fk_nomeFuncionario_nomeFuncionario_PK)
+    REFERENCES nomeFuncionario (nomeFuncionario_PK)
+    ON DELETE NO ACTION;
+ 
+ALTER TABLE Funcionario ADD CONSTRAINT FK_Funcionario_3
+    FOREIGN KEY (fk_custoFuncionario_custoFuncionario_PK)
+    REFERENCES custoFuncionario (custoFuncionario_PK)
+    ON DELETE NO ACTION;
+ 
+ALTER TABLE Funcionario ADD CONSTRAINT FK_Funcionario_4
+    FOREIGN KEY (fk_emailFuncionario_emailFuncionario_PK)
+    REFERENCES emailFuncionario (emailFuncionario_PK)
+    ON DELETE NO ACTION;
+ 
+ALTER TABLE Funcionario ADD CONSTRAINT FK_Funcionario_5
+    FOREIGN KEY (fk_turnoFuncionario_turnoFuncionario_PK)
+    REFERENCES turnoFuncionario (turnoFuncionario_PK)
+    ON DELETE NO ACTION;
+ 
+ALTER TABLE Funcionario ADD CONSTRAINT FK_Funcionario_6
+    FOREIGN KEY (fk_contaBancariaFuncionario_contaBancariaFuncionario_PK)
+    REFERENCES contaBancariaFuncionario (contaBancariaFuncionario_PK)
+    ON DELETE NO ACTION;
+ 
+ALTER TABLE Funcionario ADD CONSTRAINT FK_Funcionario_7
+    FOREIGN KEY (fk_telefoneFuncionario_telefoneFuncionario_PK)
+    REFERENCES telefoneFuncionario (telefoneFuncionario_PK)
+    ON DELETE NO ACTION;
+ 
+ALTER TABLE Funcionario ADD CONSTRAINT FK_Funcionario_8
+    FOREIGN KEY (fk_enderecoFuncionario_enderecoFuncionario_PK)
+    REFERENCES enderecoFuncionario (enderecoFuncionario_PK)
+    ON DELETE NO ACTION;
+ 
+ALTER TABLE Pizza ADD CONSTRAINT FK_Pizza_2
+    FOREIGN KEY (fk_Pedido_idPedido)
+    REFERENCES Pedido (idPedido)
+    ON DELETE CASCADE;
+ 
+ALTER TABLE Forma_de_Pagamento ADD CONSTRAINT FK_Forma_de_Pagamento_2
+    FOREIGN KEY (fk_opcaoPagamento_opcaoPagamento_PK)
+    REFERENCES opcaoPagamento (opcaoPagamento_PK)
+    ON DELETE SET NULL;
+ 
+ALTER TABLE Gerenciar ADD CONSTRAINT FK_Gerenciar_1
+    FOREIGN KEY (fk_Pedido_idPedido)
+    REFERENCES Pedido (idPedido)
+    ON DELETE RESTRICT;
+ 
+ALTER TABLE Gerenciar ADD CONSTRAINT FK_Gerenciar_2
+    FOREIGN KEY (fk_Funcionario_idFuncionario)
+    REFERENCES Funcionario (idFuncionario)
+    ON DELETE RESTRICT;
+ 
+ALTER TABLE Fazer ADD CONSTRAINT FK_Fazer_1
+    FOREIGN KEY (fk_Funcionario_idFuncionario)
+    REFERENCES Funcionario (idFuncionario)
+    ON DELETE RESTRICT;
+ 
+ALTER TABLE Fazer ADD CONSTRAINT FK_Fazer_2
+    FOREIGN KEY (fk_Pizza_idPizza)
+    REFERENCES Pizza (idPizza)
+    ON DELETE SET NULL;
+ 
+ALTER TABLE Incluir ADD CONSTRAINT FK_Incluir_1
+    FOREIGN KEY (fk_Pedido_idPedido)
+    REFERENCES Pedido (idPedido)
+    ON DELETE RESTRICT;
+ 
+ALTER TABLE Incluir ADD CONSTRAINT FK_Incluir_2
+    FOREIGN KEY (fk_Esfiha_idEsfiha)
+    REFERENCES Esfiha (idEsfiha)
+    ON DELETE SET NULL;
+ 
+ALTER TABLE Fazer ADD CONSTRAINT FK_Fazer_1
+    FOREIGN KEY (fk_Funcionario_idFuncionario)
+    REFERENCES Funcionario (idFuncionario)
+    ON DELETE RESTRICT;
+ 
+ALTER TABLE Fazer ADD CONSTRAINT FK_Fazer_2
+    FOREIGN KEY (fk_Esfiha_idEsfiha)
+    REFERENCES Esfiha (idEsfiha)
+    ON DELETE SET NULL;
+ 
+ALTER TABLE Compor ADD CONSTRAINT FK_Compor_1
+    FOREIGN KEY (fk_Ingrediente_idIngrediente)
+    REFERENCES Ingrediente (idIngrediente)
+    ON DELETE RESTRICT;
+ 
+ALTER TABLE Compor ADD CONSTRAINT FK_Compor_2
+    FOREIGN KEY (fk_Pizza_idPizza)
+    REFERENCES Pizza (idPizza)
+    ON DELETE RESTRICT;
+ 
+ALTER TABLE Compor ADD CONSTRAINT FK_Compor_1
+    FOREIGN KEY (fk_Ingrediente_idIngrediente)
+    REFERENCES Ingrediente (idIngrediente)
+    ON DELETE RESTRICT;
+ 
+ALTER TABLE Compor ADD CONSTRAINT FK_Compor_2
+    FOREIGN KEY (fk_Esfiha_idEsfiha)
+    REFERENCES Esfiha (idEsfiha)
+    ON DELETE RESTRICT;
+ 
+ALTER TABLE Incluir ADD CONSTRAINT FK_Incluir_1
+    FOREIGN KEY (fk_Pedido_idPedido)
+    REFERENCES Pedido (idPedido)
+    ON DELETE RESTRICT;
+ 
+ALTER TABLE Incluir ADD CONSTRAINT FK_Incluir_2
+    FOREIGN KEY (fk_Bebida_idBebida)
+    REFERENCES Bebida (idBebida)
+    ON DELETE SET NULL;
+ 
+ALTER TABLE Atender ADD CONSTRAINT FK_Atender_1
+    FOREIGN KEY (fk_Cliente_idCliente)
+    REFERENCES Cliente (idCliente)
+    ON DELETE RESTRICT;
+ 
+ALTER TABLE Atender ADD CONSTRAINT FK_Atender_2
+    FOREIGN KEY (fk_Funcionario_idFuncionario)
+    REFERENCES Funcionario (idFuncionario)
+    ON DELETE SET NULL;
+ 
+ALTER TABLE Realizar ADD CONSTRAINT FK_Realizar_1
+    FOREIGN KEY (fk_Cliente_idCliente)
+    REFERENCES Cliente (idCliente)
+    ON DELETE RESTRICT;
+ 
+ALTER TABLE Realizar ADD CONSTRAINT FK_Realizar_2
+    FOREIGN KEY (fk_Pedido_idPedido)
+    REFERENCES Pedido (idPedido)
+    ON DELETE RESTRICT;
+ 
+ALTER TABLE Englobar ADD CONSTRAINT FK_Englobar_1
+    FOREIGN KEY (fk_Forma_de_Pagamento_idPagamento)
+    REFERENCES Forma_de_Pagamento (idPagamento)
+    ON DELETE RESTRICT;
+ 
+ALTER TABLE Englobar ADD CONSTRAINT FK_Englobar_2
+    FOREIGN KEY (fk_Pedido_idPedido)
+    REFERENCES Pedido (idPedido)
+    ON DELETE RESTRICT;
+ 
+ALTER TABLE Conter ADD CONSTRAINT FK_Conter_1
+    FOREIGN KEY (fk_Pedido_idPedido)
+    REFERENCES Pedido (idPedido)
+    ON DELETE SET NULL;
+ 
+ALTER TABLE Conter ADD CONSTRAINT FK_Conter_2
+    FOREIGN KEY (fk_Entrega_idEntrega)
+    REFERENCES Entrega (idEntrega)
+    ON DELETE RESTRICT;
+ 
+ALTER TABLE Receber ADD CONSTRAINT FK_Receber_1
+    FOREIGN KEY (fk_Cliente_idCliente)
+    REFERENCES Cliente (idCliente)
+    ON DELETE RESTRICT;
+ 
+ALTER TABLE Receber ADD CONSTRAINT FK_Receber_2
+    FOREIGN KEY (fk_Entrega_idEntrega)
+    REFERENCES Entrega (idEntrega)
+    ON DELETE RESTRICT;
+ 
+ALTER TABLE Transportar ADD CONSTRAINT FK_Transportar_1
+    FOREIGN KEY (fk_Entrega_idEntrega)
+    REFERENCES Entrega (idEntrega)
+    ON DELETE RESTRICT;
+ 
+ALTER TABLE Transportar ADD CONSTRAINT FK_Transportar_2
+    FOREIGN KEY (fk_Funcionario_idFuncionario)
+    REFERENCES Funcionario (idFuncionario)
+    ON DELETE RESTRICT;
